@@ -4,33 +4,43 @@ Disallow: /screenshots/
 Disallow: /worker/
 Disallow: /node_modules/
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 Sitemap: https://marchforjesus.co.uk/sitemap.xml
 
-# AI Crawlers — explicitly blocked from PR plan
+# AI Crawlers — explicitly blocked from internal/private pages
 User-agent: GPTBot
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 User-agent: ChatGPT-User
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 User-agent: Google-Extended
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 User-agent: ClaudeBot
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 User-agent: PerplexityBot
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 User-agent: Amazonbot
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 User-agent: anthropic-ai
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 User-agent: Bytespider
 Disallow: /pr-plan.html
+Disallow: /financials.html
 
 User-agent: cohere-ai
 Disallow: /pr-plan.html
+Disallow: /financials.html

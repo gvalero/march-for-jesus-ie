@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Financials — March for Jesus Belfast 2026</title>
+<meta name="description" content="Transparency breakdown of donations received and expenses paid for March for Jesus Belfast 2026.">
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Oswald:wght@400;600&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+
+<style>
+  :root{
+    --burgundy:#4D0921;
+    --burgundy-light:#6b1133;
+    --burgundy-dark:#330614;
+    --beige:#e8decc;
+    --cream:#f4efe6;
+    --text:#2a2a2a;
+    --muted:#6b6b6b;
+    --gold:#c9a55c;
+    --gold-dark:#a8842f;
+    --positive:#2e7d32;
+    --negative:#b71c1c;
+    --shadow-soft:0 8px 30px rgba(0,0,0,0.08);
+    --shadow-card:0 2px 12px rgba(77,9,33,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--text);
+    line-height:1.55;
+    padding:32px 16px 80px;
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+
+  /* Header */
+  header.page-head{
+    background:linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-dark) 100%);
+    color:var(--cream);
+    padding:48px 40px;
+    border-radius:10px;
+    margin-bottom:28px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.page-head::after{
+    content:"";
+    position:absolute;right:-60px;top:-60px;
+    width:260px;height:260px;
+    background:var(--gold);opacity:.12;
+    border-radius:50%;
+  }
+  header.page-head::before{
+    content:"";
+    position:absolute;left:-40px;bottom:-80px;
+    width:180px;height:180px;
+    background:var(--gold);opacity:.06;
+    border-radius:50%;
+  }
+  .eyebrow{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:.22em;font-size:13px;
+    color:var(--gold);margin-bottom:10px;
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{
+    content:"";width:30px;height:2px;background:var(--gold);
+  }
+  header.page-head h1{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:56px;letter-spacing:.02em;line-height:1.05;
+    margin-bottom:16px;position:relative;z-index:1;
+  }
+  header.page-head .lede{
+    font-size:17px;max-width:760px;opacity:.92;position:relative;z-index:1;
+  }
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:14px;margin-top:30px;position:relative;z-index:1;
+  }
+  .stat{
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(232,222,204,.22);
+    padding:18px 20px;border-radius:8px;
+    backdrop-filter:blur(2px);
+  }
+  .stat .num{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:34px;color:var(--gold);display:block;line-height:1;
+    letter-spacing:.02em;
+  }
+  .stat .lbl{
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    opacity:.85;margin-top:8px;display:block;
+  }
+  .stat.negative .num{color:#ff8a8a}
+
+  /* Sections */
+  section.card{
+    background:#fff;
+    border-radius:10px;
+    padding:34px 36px;
+    margin-bottom:24px;
+    box-shadow:var(--shadow-card);
+  }
+  h2{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:34px;letter-spacing:.04em;
+    color:var(--burgundy);
+    margin-bottom:6px;
+  }
+  h2 .accent{color:var(--gold-dark)}
+  .section-sub{
+    color:var(--muted);font-size:14px;
+    margin-bottom:24px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--beige);
+  }
+  h3{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px;letter-spacing:.05em;
+    color:var(--burgundy-light);margin:0 0 12px;
+  }
+
+  /* Overview grid */
+  .overview{
+    display:grid;
+    grid-template-columns:1.05fr 1.05fr 0.9fr;
+    gap:28px;
+    align-items:start;
+  }
+  .chart-wrap{
+    position:relative;
+    height:280px;
+  }
+  .chart-wrap.compact{height:240px}
+  .chart-center{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    pointer-events:none;
+    text-align:center;
+  }
+  .chart-center .cc-num{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:30px;color:var(--burgundy);
+    letter-spacing:.02em;line-height:1;
+  }
+  .chart-center .cc-lbl{
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-top:6px;
+  }
+  .balance-card{
+    background:linear-gradient(135deg, var(--cream) 0%, #ede4d0 100%);
+    border:1px solid var(--beige);
+    border-radius:10px;
+    padding:24px;
+    height:100%;
+  }
+  .balance-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:12px 0;
+    border-bottom:1px dashed rgba(77,9,33,.12);
+  }
+  .balance-row:last-of-type{border-bottom:none}
+  .balance-row.total{
+    margin-top:6px;
+    padding-top:16px;
+    border-top:2px solid var(--burgundy);
+    border-bottom:none;
+  }
+  .balance-row .b-lbl{
+    font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;
+  }
+  .balance-row .b-val{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:24px;color:var(--burgundy);letter-spacing:.02em;
+  }
+  .balance-row.total .b-lbl{color:var(--text)}
+  .balance-row.total .b-val{font-size:32px}
+  .balance-row.negative .b-val{color:var(--negative)}
+  .balance-row.positive .b-val{color:var(--positive)}
+
+  /* Breakdown layout */
+  .breakdown{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:36px;
+    align-items:start;
+  }
+  .breakdown.expenses{
+    grid-template-columns:1.3fr 1fr;
+  }
+  .legend{
+    list-style:none;
+    margin-top:18px;
+  }
+  .legend li{
+    display:grid;
+    grid-template-columns:14px 1fr auto auto;
+    gap:12px;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--beige);
+    font-size:14px;
+  }
+  .legend li:last-child{border-bottom:none}
+  .legend .swatch{
+    width:14px;height:14px;border-radius:3px;
+    flex-shrink:0;
+  }
+  .legend .name{
+    color:var(--text);font-weight:500;
+  }
+  .legend .val{
+    font-family:'Space Mono',monospace;
+    font-size:13px;color:var(--burgundy);font-weight:600;
+    text-align:right;
+  }
+  .legend .pct{
+    font-family:'Space Mono',monospace;
+    font-size:12px;color:var(--muted);
+    width:54px;text-align:right;
+  }
+
+  /* Horizontal bars for expenses */
+  .hbar-list{
+    list-style:none;
+  }
+  .hbar-list li{
+    margin-bottom:14px;
+    cursor:default;
+  }
+  .hbar-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:13px;margin-bottom:4px;
+  }
+  .hbar-head .nm{font-weight:600;color:var(--text)}
+  .hbar-head .vl{
+    font-family:'Space Mono',monospace;
+    color:var(--burgundy);font-weight:600;
+  }
+  .hbar-track{
+    height:10px;background:var(--beige);border-radius:6px;
+    overflow:hidden;position:relative;
+  }
+  .hbar-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--burgundy) 0%, var(--burgundy-light) 100%);
+    border-radius:6px;
+    width:0%;
+    transition:width 1.2s cubic-bezier(.22,.61,.36,1);
+  }
+  .hbar-list li:hover .hbar-fill{
+    background:linear-gradient(90deg, var(--burgundy-light) 0%, var(--gold) 100%);
+  }
+  .hbar-pct{
+    font-family:'Space Mono',monospace;
+    font-size:11px;color:var(--muted);margin-left:6px;
+  }
+
+  /* Toggle controls */
+  .controls{
+    display:flex;gap:8px;align-items:center;margin-bottom:16px;
+  }
+  .toggle{
+    background:var(--cream);
+    border:1px solid var(--beige);
+    color:var(--burgundy);
+    font-family:'Inter',sans-serif;
+    font-size:12px;font-weight:600;
+    letter-spacing:.08em;text-transform:uppercase;
+    padding:6px 14px;border-radius:20px;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .toggle:hover{background:var(--beige)}
+  .toggle.active{
+    background:var(--burgundy);color:var(--cream);border-color:var(--burgundy);
+  }
+
+  /* Note callout */
+  .note{
+    background:rgba(201,165,92,.12);
+    border-left:3px solid var(--gold);
+    padding:12px 16px;border-radius:4px;
+    font-size:13px;color:var(--text);
+    margin-top:18px;
+  }
+  .note i{color:var(--gold-dark);margin-right:6px}
+
+  /* CTA */
+  .cta{
+    background:var(--burgundy);
+    color:var(--cream);
+    padding:40px 44px;
+    border-radius:10px;
+    margin-top:8px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta::after{
+    content:"";
+    position:absolute;right:-50px;bottom:-50px;
+    width:200px;height:200px;
+    background:var(--gold);opacity:.08;border-radius:50%;
+  }
+  .cta-inner{
+    display:grid;
+    grid-template-columns:1.6fr 1fr;
+    gap:30px;align-items:center;
+    position:relative;z-index:1;
+  }
+  .cta h2{color:var(--cream);font-size:36px;margin-bottom:8px}
+  .cta p{font-size:15px;opacity:.92;margin-bottom:0}
+  .cta-actions{
+    display:flex;flex-direction:column;gap:10px;align-items:flex-start;
+  }
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--gold);
+    color:var(--burgundy);
+    padding:14px 28px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:700;letter-spacing:.04em;
+    font-size:14px;text-transform:uppercase;
+    transition:all .25s ease;
+    box-shadow:0 6px 18px rgba(201,165,92,.3);
+  }
+  .btn-primary:hover{
+    background:var(--cream);transform:translateY(-2px);
+    box-shadow:0 10px 24px rgba(201,165,92,.4);
+  }
+  .btn-secondary{
+    display:inline-flex;align-items:center;gap:10px;
+    color:var(--cream);
+    text-decoration:none;
+    padding:10px 0;
+    font-size:13px;letter-spacing:.06em;
+    border-bottom:1px solid rgba(248,238,224,.3);
+  }
+  .btn-secondary:hover{border-bottom-color:var(--gold);color:var(--gold)}
+
+  /* Footer */
+  footer.page-foot{
+    text-align:center;color:var(--muted);font-size:12px;
+    margin-top:30px;padding-top:20px;
+    border-top:1px solid var(--beige);
+  }
+  footer.page-foot a{color:var(--burgundy);text-decoration:none}
+  footer.page-foot a:hover{text-decoration:underline}
+
+  /* Top bar */
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:18px;
+    font-size:13px;
+  }
+  .topbar a{
+    color:var(--burgundy);text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+    font-weight:600;
+  }
+  .topbar a:hover{color:var(--burgundy-light)}
+  .as-of{color:var(--muted);font-size:12px}
+
+  /* Responsive */
+  @media (max-width:980px){
+    .overview{grid-template-columns:1fr}
+    .breakdown,.breakdown.expenses{grid-template-columns:1fr;gap:28px}
+    .cta-inner{grid-template-columns:1fr}
+    .cta-actions{align-items:stretch}
+    header.page-head{padding:36px 26px}
+    header.page-head h1{font-size:42px}
+    section.card{padding:26px 22px}
+  }
+  @media (max-width:560px){
+    body{padding:18px 10px 60px}
+    header.page-head h1{font-size:34px}
+    .stat .num{font-size:28px}
+    .balance-row .b-val{font-size:20px}
+    .balance-row.total .b-val{font-size:26px}
+  }
+
+  @media print{
+    body{background:#fff;padding:0}
+    section.card,header.page-head,.cta{box-shadow:none;page-break-inside:avoid}
+    .hbar-fill{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="./" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i> Back to marchforjesus.co.uk</a>
+    <span class="as-of">As of <span id="asOfDate">—</span></span>
+  </div>
+
+  <header class="page-head">
+    <div class="eyebrow">Financial Transparency · 2026</div>
+    <h1>Where Every Pound Goes</h1>
+    <p class="lede">A full breakdown of the donations received and the costs of bringing March for Jesus Belfast 2026 to the streets. We believe in being open with the family that funds this mission.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <span class="num">€18,792</span>
+        <span class="lbl">Total Donations</span>
+      </div>
+      <div class="stat">
+        <span class="num">€59,196</span>
+        <span class="lbl">Total Expenses</span>
+      </div>
+      <div class="stat negative">
+        <span class="num">€40,404</span>
+        <span class="lbl">Remaining Need</span>
+      </div>
+      <div class="stat">
+        <span class="num">32%</span>
+        <span class="lbl">Funded So Far</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- OVERVIEW -->
+  <section class="card">
+    <h2>The <span class="accent">Big Picture</span></h2>
+    <p class="section-sub">Donations from across our community against the real cost of running the march.</p>
+
+    <div class="overview">
+      <div>
+        <h3>Donations Received</h3>
+        <div class="chart-wrap">
+          <canvas id="donutDonations"></canvas>
+          <div class="chart-center">
+            <span class="cc-num">€18,792</span>
+            <span class="cc-lbl">Raised</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>Expenses Paid</h3>
+        <div class="chart-wrap">
+          <canvas id="donutExpenses"></canvas>
+          <div class="chart-center">
+            <span class="cc-num">€59,196</span>
+            <span class="cc-lbl">Spent</span>
+          </div>
+        </div>
+      </div>
+      <div class="balance-card">
+        <h3 style="margin-bottom:14px">Balance Sheet</h3>
+        <div class="balance-row positive">
+          <span class="b-lbl"><i class="fa-solid fa-arrow-down"></i> Income</span>
+          <span class="b-val">€18,792.40</span>
+        </div>
+        <div class="balance-row negative">
+          <span class="b-lbl"><i class="fa-solid fa-arrow-up"></i> Expenditure</span>
+          <span class="b-val">€59,195.97</span>
+        </div>
+        <div class="balance-row total negative">
+          <span class="b-lbl">Shortfall</span>
+          <span class="b-val">€40,403.57</span>
+        </div>
+        <div class="note" style="margin-top:18px">
+          <i class="fa-solid fa-hand-holding-heart"></i> The march went ahead by faith. Every gift towards closing this gap is a real, tangible blessing.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATIONS -->
+  <section class="card">
+    <h2>Donations <span class="accent">Breakdown</span></h2>
+    <p class="section-sub">How the €18,792.40 came in — from PayPal links, bank accounts, online merchant and the collection boxes on the day.</p>
+
+    <div class="breakdown">
+      <div>
+        <div class="chart-wrap compact">
+          <canvas id="donationsBar"></canvas>
+        </div>
+      </div>
+      <div>
+        <ul class="legend" id="donationsLegend"></ul>
+        <div class="note">
+          <i class="fa-solid fa-circle-info"></i> Collection boxes on the day combined £4,389.47 (sterling) + €890.15 (euro) cash received as people gave directly during the march.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPENSES -->
+  <section class="card">
+    <h2>Expenses <span class="accent">Breakdown</span></h2>
+    <p class="section-sub">A line-by-line view of every category that made March for Jesus Belfast 2026 happen — sorted by size.</p>
+
+    <div class="controls">
+      <button class="toggle active" data-mode="amount">By Amount</button>
+      <button class="toggle" data-mode="percent">As % of Total</button>
+    </div>
+
+    <div class="breakdown expenses">
+      <div>
+        <ul class="hbar-list" id="expensesBars"></ul>
+      </div>
+      <div>
+        <div class="chart-wrap" style="height:340px">
+          <canvas id="expensesDonut"></canvas>
+        </div>
+        <div class="note">
+          <i class="fa-solid fa-circle-info"></i> The <strong>Stage / Sound / LED</strong> category alone accounts for over 42% of total costs — the single biggest line item required to make the day visible and audible to thousands.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-inner">
+      <div>
+        <h2>Help Us Close The Gap</h2>
+        <p>The march itself is free — but the costs are real. Every contribution, however small, brings us closer to a fully-funded 2026 and a stronger foundation for 2027.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn-primary" href="https://www.paypal.com/donate/?hosted_button_id=U8SF4BGD9A4GU" target="_blank" rel="noopener">
+          <i class="fa-brands fa-paypal"></i> Donate via PayPal
+        </a>
+        <a class="btn-secondary" href="./#support">
+          See all giving options <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-foot">
+    <p>Figures reflect actual receipts and payments. Page maintained by the March for Jesus Belfast team. For queries: <a href="mailto:information@marchforjesus.co.uk">information@marchforjesus.co.uk</a></p>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  // --- DATA ---
+  const donations = [
+    { name: 'PayPal (through the link)', value: 5792.30, color: '#4D0921' },
+    { name: 'ACC CVI',                   value: 5430.79, color: '#8a1a48' },
+    { name: 'Collection boxes (on the day)', value: 5961.36, color: '#c9a55c' },
+    { name: 'Merchant Online',           value: 1607.95, color: '#a8842f' },
+    { name: 'ACC 1',                     value: 0.00,    color: '#d4c3a5' }
+  ];
+
+  const expenses = [
+    { name: 'Stage / Sound / LED',       value: 24996.27 },
+    { name: 'MFJ — Service Provider',    value:  7400.00 },
+    { name: 'Social Media',              value:  5760.84 },
+    { name: 'Media Equipment',           value:  4517.44 },
+    { name: 'Travel Expenses',           value:  4164.94 },
+    { name: 'Printing Material',         value:  2837.33 },
+    { name: 'Hiring Equipment',          value:  2717.79 },
+    { name: 'Ambulance',                 value:  2500.00 },
+    { name: 'Hospitality',               value:  1404.10 },
+    { name: 'Miscellaneous',             value:  1337.27 },
+    { name: 'Launch night',              value:   920.84 },
+    { name: 'Supplies / Disposables',    value:   210.00 },
+    { name: 'Kids Tent',                 value:   182.17 },
+    { name: 'Bank Fees',                 value:   141.03 },
+    { name: 'Admin',                     value:    54.13 },
+    { name: 'Stationery',                value:    51.82 }
+  ];
+
+  const totalDonations = donations.reduce((s, d) => s + d.value, 0);
+  const totalExpenses  = expenses.reduce((s, e) => s + e.value, 0);
+
+  // Expense palette — burgundy to gold gradient across categories (sorted by size)
+  function expenseColor(i, n) {
+    // i = index (largest first), n = total count
+    const t = i / Math.max(n - 1, 1);
+    // burgundy #4D0921 -> burgundy-light #8a1a48 -> gold #c9a55c
+    const stops = [
+      { p: 0,   r: 0x4D, g: 0x09, b: 0x21 },
+      { p: 0.5, r: 0x8a, g: 0x1a, b: 0x48 },
+      { p: 1,   r: 0xc9, g: 0xa5, b: 0x5c }
+    ];
+    for (let k = 0; k < stops.length - 1; k++) {
+      if (t <= stops[k+1].p) {
+        const span = stops[k+1].p - stops[k].p;
+        const f = span === 0 ? 0 : (t - stops[k].p) / span;
+        const r = Math.round(stops[k].r + (stops[k+1].r - stops[k].r) * f);
+        const g = Math.round(stops[k].g + (stops[k+1].g - stops[k].g) * f);
+        const b = Math.round(stops[k].b + (stops[k+1].b - stops[k].b) * f);
+        return `rgb(${r},${g},${b})`;
+      }
+    }
+    return '#4D0921';
+  }
+  expenses.forEach((e, i) => e.color = expenseColor(i, expenses.length));
+
+  const eur = v => '€' + v.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const pct = (v, total) => ((v / total) * 100).toFixed(1) + '%';
+
+  // --- "As of" date ---
+  document.getElementById('asOfDate').textContent =
+    new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  // --- CHART.JS GLOBAL CONFIG ---
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.color = '#2a2a2a';
+
+  const tooltipCfg = (total) => ({
+    backgroundColor: '#4D0921',
+    titleColor: '#F8EEE0',
+    bodyColor: '#F8EEE0',
+    borderColor: '#c9a55c',
+    borderWidth: 1,
+    padding: 12,
+    cornerRadius: 6,
+    titleFont: { family: 'Bebas Neue', size: 14, weight: 'normal' },
+    bodyFont: { family: 'Space Mono', size: 13 },
+    callbacks: {
+      label: (ctx) => {
+        const v = ctx.parsed ?? ctx.raw;
+        return `  ${eur(v)}  ·  ${pct(v, total)}`;
+      }
+    }
+  });
+
+  // --- 1. Donations donut (overview) ---
+  new Chart(document.getElementById('donutDonations'), {
+    type: 'doughnut',
+    data: {
+      labels: donations.map(d => d.name),
+      datasets: [{
+        data: donations.map(d => d.value),
+        backgroundColor: donations.map(d => d.color),
+        borderColor: '#fff',
+        borderWidth: 3,
+        hoverOffset: 12
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '68%',
+      plugins: {
+        legend: { display: false },
+        tooltip: tooltipCfg(totalDonations)
+      }
+    }
+  });
+
+  // --- 2. Expenses donut (overview, top 5 + others) ---
+  const top5 = expenses.slice(0, 5);
+  const othersTotal = expenses.slice(5).reduce((s, e) => s + e.value, 0);
+  const overviewExpenses = [...top5, { name: 'Other categories', value: othersTotal, color: '#d4c3a5' }];
+  new Chart(document.getElementById('donutExpenses'), {
+    type: 'doughnut',
+    data: {
+      labels: overviewExpenses.map(d => d.name),
+      datasets: [{
+        data: overviewExpenses.map(d => d.value),
+        backgroundColor: overviewExpenses.map(d => d.color),
+        borderColor: '#fff',
+        borderWidth: 3,
+        hoverOffset: 12
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '68%',
+      plugins: {
+        legend: { display: false },
+        tooltip: tooltipCfg(totalExpenses)
+      }
+    }
+  });
+
+  // --- 3. Donations horizontal bar chart ---
+  const sortedDonations = [...donations].sort((a, b) => b.value - a.value);
+  new Chart(document.getElementById('donationsBar'), {
+    type: 'bar',
+    data: {
+      labels: sortedDonations.map(d => d.name),
+      datasets: [{
+        data: sortedDonations.map(d => d.value),
+        backgroundColor: sortedDonations.map(d => d.color),
+        borderRadius: 6,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: tooltipCfg(totalDonations)
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid: { color: '#e8decc' },
+          ticks: {
+            callback: v => '€' + (v >= 1000 ? (v/1000) + 'k' : v),
+            font: { family: 'Space Mono', size: 11 },
+            color: '#6b6b6b'
+          }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 12 }, color: '#2a2a2a' }
+        }
+      }
+    }
+  });
+
+  // --- Donations legend table ---
+  const donLegend = document.getElementById('donationsLegend');
+  sortedDonations.forEach(d => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span class="swatch" style="background:${d.color}"></span>
+      <span class="name">${d.name}</span>
+      <span class="val">${eur(d.value)}</span>
+      <span class="pct">${pct(d.value, totalDonations)}</span>
+    `;
+    donLegend.appendChild(li);
+  });
+
+  // --- 4. Expenses horizontal bars (custom HTML for animation) ---
+  const expBars = document.getElementById('expensesBars');
+  const maxExpense = expenses[0].value;
+  expenses.forEach((e, i) => {
+    const li = document.createElement('li');
+    li.dataset.value = e.value;
+    li.dataset.pct = (e.value / totalExpenses * 100).toFixed(1);
+    li.innerHTML = `
+      <div class="hbar-head">
+        <span class="nm">${e.name}<span class="hbar-pct"> · ${pct(e.value, totalExpenses)}</span></span>
+        <span class="vl">${eur(e.value)}</span>
+      </div>
+      <div class="hbar-track">
+        <div class="hbar-fill" style="background:linear-gradient(90deg, ${e.color} 0%, ${e.color}cc 100%);"></div>
+      </div>
+    `;
+    expBars.appendChild(li);
+  });
+
+  // Animate bars in after a tiny delay (and on every mode switch)
+  function applyBarMode(mode) {
+    const lis = expBars.querySelectorAll('li');
+    lis.forEach(li => {
+      const v = parseFloat(li.dataset.value);
+      const p = parseFloat(li.dataset.pct);
+      const fill = li.querySelector('.hbar-fill');
+      // Always reset to 0 first to retrigger transition
+      fill.style.width = '0%';
+      // eslint-disable-next-line no-unused-expressions
+      fill.offsetHeight; // force reflow
+      if (mode === 'amount') {
+        fill.style.width = (v / maxExpense * 100) + '%';
+      } else {
+        fill.style.width = (p / (expenses[0].value / totalExpenses * 100) * 100) + '%';
+      }
+    });
+  }
+
+  // --- 5. Expenses donut chart (full categories) ---
+  new Chart(document.getElementById('expensesDonut'), {
+    type: 'doughnut',
+    data: {
+      labels: expenses.map(e => e.name),
+      datasets: [{
+        data: expenses.map(e => e.value),
+        backgroundColor: expenses.map(e => e.color),
+        borderColor: '#fff',
+        borderWidth: 2,
+        hoverOffset: 10
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '52%',
+      plugins: {
+        legend: {
+          display: true,
+          position: 'right',
+          labels: {
+            boxWidth: 10,
+            boxHeight: 10,
+            font: { size: 11 },
+            padding: 7,
+            generateLabels: (chart) => {
+              const data = chart.data;
+              return data.labels.map((label, i) => ({
+                text: label,
+                fillStyle: data.datasets[0].backgroundColor[i],
+                strokeStyle: data.datasets[0].backgroundColor[i],
+                lineWidth: 0,
+                hidden: false,
+                index: i
+              }));
+            }
+          }
+        },
+        tooltip: tooltipCfg(totalExpenses)
+      }
+    }
+  });
+
+  // --- Toggle controls ---
+  document.querySelectorAll('.toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.toggle').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyBarMode(btn.dataset.mode);
+    });
+  });
+
+  // Trigger initial bar animation after charts are drawn
+  requestAnimationFrame(() => {
+    setTimeout(() => applyBarMode('amount'), 150);
+  });
+</script>
+</body>
+</html>
