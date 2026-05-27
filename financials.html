@@ -356,8 +356,18 @@
     margin-top:30px;padding-top:20px;
     border-top:1px solid var(--beige);
   }
+  footer.page-foot p{margin-bottom:6px}
+  footer.page-foot .fx-note{
+    font-size:11px;opacity:.85;font-style:italic;
+  }
   footer.page-foot a{color:var(--burgundy);text-decoration:none}
   footer.page-foot a:hover{text-decoration:underline}
+
+  /* Chart center text fades out on hover so tooltips remain readable */
+  .chart-center{
+    transition:opacity .18s ease;
+  }
+  .chart-wrap.hovering .chart-center{opacity:0}
 
   /* Top bar */
   .topbar{
@@ -412,19 +422,19 @@
     <p class="lede">A full breakdown of the donations received and the costs of bringing March for Jesus Belfast 2026 to the streets. We believe in being open with the family that funds this mission.</p>
     <div class="stat-row">
       <div class="stat">
-        <span class="num">€18,792</span>
+        <span class="num" id="statDonations">—</span>
         <span class="lbl">Total Donations</span>
       </div>
       <div class="stat">
-        <span class="num">€59,196</span>
+        <span class="num" id="statExpenses">—</span>
         <span class="lbl">Total Expenses</span>
       </div>
       <div class="stat negative">
-        <span class="num">€40,404</span>
+        <span class="num" id="statShortfall">—</span>
         <span class="lbl">Remaining Need</span>
       </div>
       <div class="stat">
-        <span class="num">32%</span>
+        <span class="num" id="statFunded">—</span>
         <span class="lbl">Funded So Far</span>
       </div>
     </div>
@@ -441,7 +451,7 @@
         <div class="chart-wrap">
           <canvas id="donutDonations"></canvas>
           <div class="chart-center">
-            <span class="cc-num">€18,792</span>
+            <span class="cc-num" id="ccDonations">—</span>
             <span class="cc-lbl">Raised</span>
           </div>
         </div>
@@ -451,7 +461,7 @@
         <div class="chart-wrap">
           <canvas id="donutExpenses"></canvas>
           <div class="chart-center">
-            <span class="cc-num">€59,196</span>
+            <span class="cc-num" id="ccExpenses">—</span>
             <span class="cc-lbl">Spent</span>
           </div>
         </div>
@@ -460,15 +470,15 @@
         <h3 style="margin-bottom:14px">Balance Sheet</h3>
         <div class="balance-row positive">
           <span class="b-lbl"><i class="fa-solid fa-arrow-down"></i> Income</span>
-          <span class="b-val">€18,792.40</span>
+          <span class="b-val" id="bsIncome">—</span>
         </div>
         <div class="balance-row negative">
           <span class="b-lbl"><i class="fa-solid fa-arrow-up"></i> Expenditure</span>
-          <span class="b-val">€59,195.97</span>
+          <span class="b-val" id="bsExpenditure">—</span>
         </div>
         <div class="balance-row total negative">
           <span class="b-lbl">Shortfall</span>
-          <span class="b-val">€40,403.57</span>
+          <span class="b-val" id="bsShortfall">—</span>
         </div>
         <div class="note" style="margin-top:18px">
           <i class="fa-solid fa-hand-holding-heart"></i> The march went ahead by faith. Every gift towards closing this gap is a real, tangible blessing.
@@ -480,7 +490,7 @@
   <!-- DONATIONS -->
   <section class="card">
     <h2>Donations <span class="accent">Breakdown</span></h2>
-    <p class="section-sub">How the €18,792.40 came in — from PayPal links, bank accounts, online merchant and the collection boxes on the day.</p>
+    <p class="section-sub">How the total raised came in — from PayPal links, bank accounts, online merchant and the collection boxes on the day.</p>
 
     <div class="breakdown">
       <div>
@@ -491,7 +501,7 @@
       <div>
         <ul class="legend" id="donationsLegend"></ul>
         <div class="note">
-          <i class="fa-solid fa-circle-info"></i> Collection boxes on the day combined £4,389.47 (sterling) + €890.15 (euro) cash received as people gave directly during the march.
+          <i class="fa-solid fa-circle-info"></i> Collection boxes combined sterling cash (~£4,389) gathered on the day with euro contributions (~€890), presented here in a single GBP total.
         </div>
       </div>
     </div>
@@ -542,6 +552,7 @@
 
   <footer class="page-foot">
     <p>Figures reflect actual receipts and payments. Page maintained by the March for Jesus Belfast team. For queries: <a href="mailto:information@marchforjesus.co.uk">information@marchforjesus.co.uk</a></p>
+    <p class="fx-note">Source records are kept in EUR; figures converted to GBP at the ECB reference rate of £1 ≈ €1.155 (May 2026).</p>
   </footer>
 
 </div>
@@ -576,9 +587,6 @@
     { name: 'Stationery',                value:    51.82 }
   ];
 
-  const totalDonations = donations.reduce((s, d) => s + d.value, 0);
-  const totalExpenses  = expenses.reduce((s, e) => s + e.value, 0);
-
   // Expense palette — burgundy to gold gradient across categories (sorted by size)
   function expenseColor(i, n) {
     // i = index (largest first), n = total count
@@ -603,8 +611,32 @@
   }
   expenses.forEach((e, i) => e.color = expenseColor(i, expenses.length));
 
-  const eur = v => '€' + v.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  // --- CURRENCY CONVERSION ---
+  // Source records are in EUR. Convert to GBP at the current ECB reference rate.
+  // 1 EUR = 0.86595 GBP (ECB, May 2026) ⇔ £1 ≈ €1.155
+  const EUR_TO_GBP = 0.86595;
+  donations.forEach(d => { d.value = d.value * EUR_TO_GBP; });
+  expenses.forEach(e => { e.value = e.value * EUR_TO_GBP; });
+
+  const totalDonations = donations.reduce((s, d) => s + d.value, 0);
+  const totalExpenses  = expenses.reduce((s, e) => s + e.value, 0);
+  const shortfall      = totalExpenses - totalDonations;
+  const fundedPct      = totalDonations / totalExpenses;
+
+  const gbp = v => '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const gbpRound = v => '£' + Math.round(v).toLocaleString('en-GB');
   const pct = (v, total) => ((v / total) * 100).toFixed(1) + '%';
+
+  // --- Populate static stat/balance/center placeholders ---
+  document.getElementById('statDonations').textContent = gbpRound(totalDonations);
+  document.getElementById('statExpenses').textContent  = gbpRound(totalExpenses);
+  document.getElementById('statShortfall').textContent = gbpRound(shortfall);
+  document.getElementById('statFunded').textContent    = Math.round(fundedPct * 100) + '%';
+  document.getElementById('ccDonations').textContent   = gbpRound(totalDonations);
+  document.getElementById('ccExpenses').textContent    = gbpRound(totalExpenses);
+  document.getElementById('bsIncome').textContent      = gbp(totalDonations);
+  document.getElementById('bsExpenditure').textContent = gbp(totalExpenses);
+  document.getElementById('bsShortfall').textContent   = gbp(shortfall);
 
   // --- "As of" date ---
   document.getElementById('asOfDate').textContent =
@@ -627,10 +659,21 @@
     callbacks: {
       label: (ctx) => {
         const v = ctx.parsed ?? ctx.raw;
-        return `  ${eur(v)}  ·  ${pct(v, total)}`;
+        return `  ${gbp(v)}  ·  ${pct(v, total)}`;
       }
     }
   });
+
+  // --- Hover handler: fade chart-center text so tooltips don't overlap it ---
+  function fadeCenterOnHover(event, elements, chart) {
+    const wrap = chart.canvas.parentElement;
+    if (!wrap) return;
+    if (elements && elements.length > 0) {
+      wrap.classList.add('hovering');
+    } else {
+      wrap.classList.remove('hovering');
+    }
+  }
 
   // --- 1. Donations donut (overview) ---
   new Chart(document.getElementById('donutDonations'), {
@@ -648,6 +691,7 @@
     options: {
       responsive: true, maintainAspectRatio: false,
       cutout: '68%',
+      onHover: fadeCenterOnHover,
       plugins: {
         legend: { display: false },
         tooltip: tooltipCfg(totalDonations)
@@ -674,10 +718,21 @@
     options: {
       responsive: true, maintainAspectRatio: false,
       cutout: '68%',
+      onHover: fadeCenterOnHover,
       plugins: {
         legend: { display: false },
         tooltip: tooltipCfg(totalExpenses)
       }
+    }
+  });
+
+  // Also clear the hover state when the mouse leaves the chart entirely
+  ['donutDonations','donutExpenses'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.parentElement) {
+      el.parentElement.addEventListener('mouseleave', () => {
+        el.parentElement.classList.remove('hovering');
+      });
     }
   });
 
@@ -706,7 +761,7 @@
           beginAtZero: true,
           grid: { color: '#e8decc' },
           ticks: {
-            callback: v => '€' + (v >= 1000 ? (v/1000) + 'k' : v),
+            callback: v => '£' + (v >= 1000 ? (v/1000) + 'k' : v),
             font: { family: 'Space Mono', size: 11 },
             color: '#6b6b6b'
           }
@@ -726,7 +781,7 @@
     li.innerHTML = `
       <span class="swatch" style="background:${d.color}"></span>
       <span class="name">${d.name}</span>
-      <span class="val">${eur(d.value)}</span>
+      <span class="val">${gbp(d.value)}</span>
       <span class="pct">${pct(d.value, totalDonations)}</span>
     `;
     donLegend.appendChild(li);
@@ -742,7 +797,7 @@
     li.innerHTML = `
       <div class="hbar-head">
         <span class="nm">${e.name}<span class="hbar-pct"> · ${pct(e.value, totalExpenses)}</span></span>
-        <span class="vl">${eur(e.value)}</span>
+        <span class="vl">${gbp(e.value)}</span>
       </div>
       <div class="hbar-track">
         <div class="hbar-fill" style="background:linear-gradient(90deg, ${e.color} 0%, ${e.color}cc 100%);"></div>
