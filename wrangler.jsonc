@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mfj-mailerlite-proxy",
+  "name": "mfj-ie-mailerlite-proxy",
   "compatibility_date": "2025-09-27",
   "observability": {
     "enabled": true

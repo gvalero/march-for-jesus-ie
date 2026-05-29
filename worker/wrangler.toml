@@ -1,6 +1,10 @@
-name = "mfj-mailerlite-proxy"
+name = "mfj-ie-mailerlite-proxy"
 main = "mailerlite-proxy.js"
 compatibility_date = "2024-01-01"
+
+# Renamed for marchforjesus.ie (Dublin) — sister site of Belfast (.co.uk).
+# Do not revert to "mfj-mailerlite-proxy" or a deploy from this repo would
+# overwrite the live Belfast Worker.
 
 [vars]
 # MAILERLITE_API_KEY is set as a secret, not here

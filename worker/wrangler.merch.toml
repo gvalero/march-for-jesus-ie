@@ -1,26 +1,41 @@
-name = "mfj-merch-orders"
+name = "mfj-ie-merch-orders"
 main = "merch-order-worker.js"
 compatibility_date = "2024-01-01"
 
-# Run this config only from the MFJ Belfast Cloudflare account/profile.
-# Do not deploy it from personal, church-general, or work Cloudflare profiles.
+# Dublin (.ie) merch Worker. DO NOT revert any of the following to Belfast (.co.uk)
+# values without also changing the Worker name — sharing a name with Belfast would
+# overwrite the live Belfast merch Worker on deploy.
+#
+# NOT YET DEPLOYABLE. Before first deploy:
+#   1. Create a new D1 database in Cloudflare:
+#      wrangler d1 create mfj_ie_merch_orders --config wrangler.merch.toml
+#      Copy the returned id into database_id below.
+#   2. Set required secrets on the Worker (Stripe live/test, Microsoft Graph creds,
+#      Power Automate webhook, admin token) via `wrangler secret put`.
+#   3. Decide MERCH_CONFIRMATION_SENDER: reuse information@marchforjesus.co.uk
+#      until information@marchforjesus.ie has MX + mailbox provisioned.
+#   4. Uncomment the deploy-merch job in .github/workflows/deploy.yml.
 
 [vars]
-SITE_URL = "https://marchforjesus.co.uk"
-PROFILE_NAME = "mfj-belfast-merch"
-MICROSOFT_PROFILE_NAME = "mfj-belfast-merch"
+SITE_URL = "https://marchforjesus.ie"
+PROFILE_NAME = "mfj-dublin-merch"
+MICROSOFT_PROFILE_NAME = "mfj-dublin-merch"
 MICROSOFT_TENANT_DOMAIN = "allnations.ie"
 MICROSOFT_GRAPH_TENANT_ID = "ccbeac7f-5f2b-4e2f-96fb-71bba535ccf3"
 MICROSOFT_GRAPH_SITE_ID = "allnationschurchdub.sharepoint.com,903073eb-ef59-4b83-98d5-9b60617b02d3,cea9f057-7036-4b9d-b068-5fbea158e064"
+# TODO: SharePoint list for .ie orders — currently points at Belfast list. Create a
+# Dublin list before first merch deploy and replace the id here.
 MICROSOFT_GRAPH_LIST_ID = "ad2bcfae-77ca-47fb-b6a0-abb88bb4877c"
+# TODO: provision information@marchforjesus.ie or reuse Belfast sender.
 MERCH_CONFIRMATION_SENDER = "information@marchforjesus.co.uk"
-# Live mode: real GBP payments are taken via Stripe.
+# Live mode: real EUR payments are taken via Stripe.
 STRIPE_KEY_MODE = "live"
 
 [[d1_databases]]
 binding = "MERCH_DB"
-database_name = "mfj_merch_orders"
-database_id = "dcaaac7c-72da-46fa-a46a-553929bad39f"
+database_name = "mfj_ie_merch_orders"
+# database_id intentionally blank — create the D1 db and fill this before deploy.
+database_id = ""
 
 # Secrets required before deployment:
 # Use the MFJ Belfast Cloudflare account/profile only.
