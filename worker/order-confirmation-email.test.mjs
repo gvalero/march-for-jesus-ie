@@ -37,7 +37,7 @@ test('getMicrosoftGraphMailConfig defaults to MFJ sender and validates tenant', 
     MICROSOFT_GRAPH_CLIENT_SECRET: 'client-secret'
   });
 
-  assert.equal(config.sender, 'information@marchforjesus.co.uk');
+  assert.equal(config.sender, 'information@marchforjesus.ie');
   assert.equal(config.tenantId, 'ccbeac7f-5f2b-4e2f-96fb-71bba535ccf3');
 });
 

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Order received | March for Jesus Belfast</title>
+<title>Order received | March for Jesus Dublin</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B08WPFHX9Q"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -23,13 +23,13 @@
 <section class="shop-success-card">
 <p class="shop-kicker">Payment received</p>
 <h1>Thank you for your merch pre-order.</h1>
-<p id="successConfirmationLine">Your order confirmation will be emailed to you shortly. Please keep it safe and bring it to the merch collection point at Ormeau Park on the day of March for Jesus Belfast.</p>
+<p id="successConfirmationLine">Your order confirmation will be emailed to you shortly. Please keep it safe and bring it to the merch collection point at the Dublin city-centre venue (TBC) on the day of March for Jesus Dublin.</p>
 <div id="successOrderDetails" class="shop-success-details" hidden>
 <div class="shop-success-details__row">
 <span class="shop-success-details__label">Order reference</span>
 <strong id="successOrderRef" class="shop-success-details__ref">—</strong>
 </div>
-<p class="shop-success-details__hint">Quote this reference if you need to check on your order. If you don't see the email within a few minutes, check your spam folder, then email <a href="mailto:information@marchforjesus.co.uk">information@marchforjesus.co.uk</a> with your order reference and we'll confirm your order is on file.</p>
+<p class="shop-success-details__hint">Quote this reference if you need to check on your order. If you don't see the email within a few minutes, check your spam folder, then email <a href="mailto:information@marchforjesus.ie">information@marchforjesus.ie</a> with your order reference and we'll confirm your order is on file.</p>
 </div>
 <div class="shop-success-actions">
 <a class="shop-primary-link" href="index.html"><span class="shop-primary-link__sheen" aria-hidden="true"></span><span class="shop-primary-link__label">Back to home</span></a>
@@ -72,7 +72,7 @@ if (typeof gtag === 'function') {
         if (refEl) refEl.textContent = data.orderRef;
         if (detailsBox) detailsBox.hidden = false;
         if (lineEl && data.customerEmail) {
-          lineEl.innerHTML = 'Your order confirmation has been emailed to <strong>' + escapeHtml(data.customerEmail) + '</strong>. Please keep it safe and bring it to the merch collection point at Ormeau Park on the day of March for Jesus Belfast. If that email address looks wrong, contact us straight away with your order reference below so we can update your contact details.';
+          lineEl.innerHTML = 'Your order confirmation has been emailed to <strong>' + escapeHtml(data.customerEmail) + '</strong>. Please keep it safe and bring it to the merch collection point at the Dublin city-centre venue (TBC) on the day of March for Jesus Dublin. If that email address looks wrong, contact us straight away with your order reference below so we can update your contact details.';
         }
         return;
       }

@@ -1,8 +1,8 @@
 import { MERCH_CATALOG, findVariant, listVariants } from './merch-catalog.js';
 
 const ALLOWED_ORIGINS = [
-  'https://marchforjesus.co.uk',
-  'https://www.marchforjesus.co.uk',
+  'https://marchforjesus.ie',
+  'https://www.marchforjesus.ie',
   'https://gvalero.github.io',
   'http://localhost:8080',
   'http://localhost:5173'
@@ -30,7 +30,7 @@ function isAllowedOrigin(origin) {
 
 const RESERVATION_TTL_SECONDS = 30 * 60;
 const ALERT_INTERVAL = 10;
-const EXPECTED_PROFILE = 'mfj-belfast-merch';
+const EXPECTED_PROFILE = 'mfj-dublin-merch';
 const EXPECTED_MICROSOFT_TENANT = 'allnations.ie';
 const EXPECTED_MICROSOFT_TENANT_ID = 'ccbeac7f-5f2b-4e2f-96fb-71bba535ccf3';
 const GRAPH_SHAREPOINT_KEYS = [
@@ -45,7 +45,7 @@ const GRAPH_AUTH_KEYS = [
   'MICROSOFT_GRAPH_CLIENT_ID',
   'MICROSOFT_GRAPH_CLIENT_SECRET'
 ];
-const DEFAULT_MERCH_CONFIRMATION_SENDER = 'information@marchforjesus.co.uk';
+const DEFAULT_MERCH_CONFIRMATION_SENDER = 'information@marchforjesus.ie';
 const STRIPE_WEBHOOK_TOLERANCE_SECONDS = 5 * 60;
 
 function jsonResponse(body, status = 200, origin = '') {
@@ -407,16 +407,16 @@ function appendFormValue(params, key, value) {
 
 async function createStripeCheckoutSession(env, reservationId, lines, customerEmail) {
   const stripeSecretKey = getStripeSecretKey(env);
-  const siteUrl = env.SITE_URL || 'https://marchforjesus.co.uk';
+  const siteUrl = env.SITE_URL || 'https://marchforjesus.ie';
   const params = new URLSearchParams();
 
   appendFormValue(params, 'mode', 'payment');
   appendFormValue(params, 'success_url', `${siteUrl}/shop-success.html?session_id={CHECKOUT_SESSION_ID}`);
   appendFormValue(params, 'cancel_url', `${siteUrl}/?checkout=cancelled`);
   appendFormValue(params, 'metadata[reservation_id]', reservationId);
-  appendFormValue(params, 'metadata[channel]', 'mfj_belfast_merch');
+  appendFormValue(params, 'metadata[channel]', 'mfj_dublin_merch');
   appendFormValue(params, 'payment_intent_data[metadata][reservation_id]', reservationId);
-  appendFormValue(params, 'payment_intent_data[metadata][channel]', 'mfj_belfast_merch');
+  appendFormValue(params, 'payment_intent_data[metadata][channel]', 'mfj_dublin_merch');
   appendFormValue(params, 'expires_at', getUnixTime() + RESERVATION_TTL_SECONDS);
   appendFormValue(params, 'allow_promotion_codes', 'false');
   appendFormValue(params, 'billing_address_collection', 'auto');
@@ -432,7 +432,7 @@ async function createStripeCheckoutSession(env, reservationId, lines, customerEm
     appendFormValue(params, `line_items[${index}][price_data][currency]`, 'gbp');
     appendFormValue(params, `line_items[${index}][price_data][unit_amount]`, line.variant.priceGbp * 100);
     appendFormValue(params, `line_items[${index}][price_data][product_data][name]`, productTitle);
-    appendFormValue(params, `line_items[${index}][price_data][product_data][description]`, 'Collection at Ormeau Park on the day of March for Jesus Belfast.');
+    appendFormValue(params, `line_items[${index}][price_data][product_data][description]`, 'Collection at the March for Jesus Dublin event (collection point TBC).');
     appendFormValue(params, `line_items[${index}][price_data][product_data][metadata][variant_id]`, line.variant.id);
   });
 
@@ -590,13 +590,13 @@ function buildOrderConfirmationEmail(payload) {
   `).join('');
 
   return `
-    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">Your March for Jesus Belfast merch order is confirmed. Bring this email to collection at Ormeau Park.</div>
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">Your March for Jesus Dublin merch order is confirmed. Bring this email to collection (point TBC).</div>
     <div style="margin:0;padding:0;background:#f8eee0;color:#4d0921;font-family:Arial,Helvetica,sans-serif;">
       <div style="max-width:680px;margin:0 auto;padding:28px 16px;">
         <div style="background:#4d0921;border-radius:28px 28px 0 0;padding:32px 28px;text-align:center;">
-          <div style="display:inline-block;border:1px solid rgba(248,238,224,0.42);border-radius:999px;color:#f8eee0;font-size:12px;font-weight:700;letter-spacing:0.16em;padding:9px 14px;text-transform:uppercase;">March for Jesus Belfast</div>
+          <div style="display:inline-block;border:1px solid rgba(248,238,224,0.42);border-radius:999px;color:#f8eee0;font-size:12px;font-weight:700;letter-spacing:0.16em;padding:9px 14px;text-transform:uppercase;">March for Jesus Dublin</div>
           <h1 style="margin:22px 0 8px;color:#f8eee0;font-size:38px;line-height:1.02;letter-spacing:0.02em;">Your order is confirmed</h1>
-          <p style="margin:0;color:#eadfce;font-size:16px;line-height:1.55;">Thanks${customerName} - your merch is reserved for collection at Ormeau Park.</p>
+          <p style="margin:0;color:#eadfce;font-size:16px;line-height:1.55;">Thanks${customerName} - your merch is reserved for collection at the March for Jesus Dublin event (collection point TBC).</p>
         </div>
         <div style="background:#ffffff;border:1px solid #eadfce;border-top:0;border-radius:0 0 28px 28px;padding:28px;">
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:0 0 24px;">
@@ -626,10 +626,10 @@ function buildOrderConfirmationEmail(payload) {
           </div>
           <div style="background:#fff8ed;border-left:5px solid #4d0921;border-radius:18px;padding:18px 20px;margin:0 0 24px;">
             <h2 style="margin:0 0 8px;color:#4d0921;font-size:18px;line-height:1.3;">Collection reminder</h2>
-            <p style="margin:0;color:#3d332d;font-size:15px;line-height:1.6;">Bring this email to the merch collection point at Ormeau Park on the day of March for Jesus Belfast. Your order contains ${escapeHtml(itemCount)} ${itemCount === 1 ? 'item' : 'items'}.</p>
+            <p style="margin:0;color:#3d332d;font-size:15px;line-height:1.6;">Bring this email to the merch collection point at the March for Jesus Dublin event (collection point TBC). Your order contains ${escapeHtml(itemCount)} ${itemCount === 1 ? 'item' : 'items'}.</p>
           </div>
-          <p style="margin:0 0 8px;color:#3d332d;font-size:15px;line-height:1.6;">If you have any questions, reply to this email or contact <a href="mailto:information@marchforjesus.co.uk" style="color:#4d0921;font-weight:700;">information@marchforjesus.co.uk</a>.</p>
-          <p style="margin:20px 0 0;color:#6b5f55;font-size:12px;line-height:1.5;">You are receiving this transactional email because a merch pre-order was placed through marchforjesus.co.uk.</p>
+          <p style="margin:0 0 8px;color:#3d332d;font-size:15px;line-height:1.6;">If you have any questions, reply to this email or contact <a href="mailto:information@marchforjesus.ie" style="color:#4d0921;font-weight:700;">information@marchforjesus.ie</a>.</p>
+          <p style="margin:20px 0 0;color:#6b5f55;font-size:12px;line-height:1.5;">You are receiving this transactional email because a merch pre-order was placed through marchforjesus.ie.</p>
         </div>
       </div>
     </div>
@@ -668,7 +668,7 @@ async function sendOrderConfirmationEmail(db, env, orderId, payload) {
       },
       body: JSON.stringify({
         message: {
-          subject: 'Your March for Jesus Belfast merch order is confirmed',
+          subject: 'Your March for Jesus Dublin merch order is confirmed',
           body: {
             contentType: 'HTML',
             content: buildOrderConfirmationEmail(payload)
@@ -897,7 +897,7 @@ function buildMicrosoftPayload(env, payload) {
     profile: {
       name: profileName,
       source: 'cloudflare-worker',
-      site: 'marchforjesus.co.uk',
+      site: 'marchforjesus.ie',
       microsoftTenant: tenantDomain
     },
     ...payload

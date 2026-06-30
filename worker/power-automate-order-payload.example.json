@@ -1,8 +1,8 @@
 {
   "profile": {
-    "name": "mfj-belfast-merch",
+    "name": "mfj-dublin-merch",
     "source": "cloudflare-worker",
-    "site": "marchforjesus.co.uk",
+    "site": "marchforjesus.ie",
     "microsoftTenant": "allnations.ie"
   },
   "order": {

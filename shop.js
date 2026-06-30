@@ -280,7 +280,7 @@
 
   async function loadCatalog() {
     if (!API_BASE) {
-      showAlert('Merch checkout is not connected yet. Configure the MFJ Belfast Worker URL before go-live.', 'error');
+      showAlert('Merch checkout is not connected yet. Configure the MFJ Dublin Worker URL before go-live.', 'error');
       renderProducts();
       renderCart();
       return;

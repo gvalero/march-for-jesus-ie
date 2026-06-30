@@ -100,7 +100,7 @@ test('Stripe Checkout Session is configured for collection, not shipping', async
   await createStripeCheckoutSession({
     STRIPE_KEY_MODE: 'test',
     STRIPE_SECRET_KEY: 'sk_test_123',
-    SITE_URL: 'https://marchforjesus.co.uk'
+    SITE_URL: 'https://marchforjesus.ie'
   }, 'reservation-1', [{
     variant: listVariants()[0],
     quantity: 1
@@ -113,7 +113,7 @@ test('Stripe Checkout Session is configured for collection, not shipping', async
   assert.equal(requestBody.get('shipping_address_collection[allowed_countries][1]'), null);
   assert.match(
     requestBody.get('line_items[0][price_data][product_data][description]'),
-    /Collection at Ormeau Park/
+    /Collection at the March for Jesus Dublin event/
   );
 });
 

@@ -1,9 +1,9 @@
-// Cloudflare Worker — MailerLite API Proxy for marchforjesus.co.uk
+// Cloudflare Worker — MailerLite API Proxy for marchforjesus.ie
 // Deploy to Cloudflare Workers. Set MAILERLITE_API_KEY as a secret.
 
 const ALLOWED_ORIGINS = [
-  'https://marchforjesus.co.uk',
-  'https://www.marchforjesus.co.uk',
+  'https://marchforjesus.ie',
+  'https://www.marchforjesus.ie',
   'https://gvalero.github.io',
   'http://localhost:8080'
 ];

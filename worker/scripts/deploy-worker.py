@@ -22,14 +22,14 @@ if not token:
     sys.exit("MFJ_CLOUDFLARE_API_TOKEN not set")
 
 plain_vars = {
-    "SITE_URL": "https://marchforjesus.co.uk",
-    "PROFILE_NAME": "mfj-belfast-merch",
-    "MICROSOFT_PROFILE_NAME": "mfj-belfast-merch",
+    "SITE_URL": "https://marchforjesus.ie",
+    "PROFILE_NAME": "mfj-dublin-merch",
+    "MICROSOFT_PROFILE_NAME": "mfj-dublin-merch",
     "MICROSOFT_TENANT_DOMAIN": "allnations.ie",
     "MICROSOFT_GRAPH_TENANT_ID": "ccbeac7f-5f2b-4e2f-96fb-71bba535ccf3",
     "MICROSOFT_GRAPH_SITE_ID": "allnationschurchdub.sharepoint.com,903073eb-ef59-4b83-98d5-9b60617b02d3,cea9f057-7036-4b9d-b068-5fbea158e064",
     "MICROSOFT_GRAPH_LIST_ID": "ad2bcfae-77ca-47fb-b6a0-abb88bb4877c",
-    "MERCH_CONFIRMATION_SENDER": "information@marchforjesus.co.uk",
+    "MERCH_CONFIRMATION_SENDER": "information@marchforjesus.ie",
     "STRIPE_KEY_MODE": "live",
 }
 secret_names = [

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow">
-<title>Financials — March for Jesus Belfast 2026</title>
-<meta name="description" content="Transparency breakdown of donations received and expenses paid for March for Jesus Belfast 2026.">
+<title>Financials — March for Jesus Dublin 2026</title>
+<meta name="description" content="Provisional transparency breakdown of donations received and expenses paid for March for Jesus Dublin 2026.">
 
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Oswald:wght@400;600&family=Space+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -412,14 +412,14 @@
 <div class="wrap">
 
   <div class="topbar">
-    <a href="./" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i> Back to marchforjesus.co.uk</a>
+    <a href="./" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i> Back to marchforjesus.ie</a>
     <span class="as-of">As of <span id="asOfDate">—</span></span>
   </div>
 
   <header class="page-head">
     <div class="eyebrow">Financial Transparency · 2026</div>
     <h1>Where Every Pound Goes</h1>
-    <p class="lede">A full breakdown of the donations received and the costs of bringing March for Jesus Belfast 2026 to the streets. We believe in being open with the family that funds this mission.</p>
+    <p class="lede">Provisional Dublin migration of the donations received and the costs of bringing March for Jesus Dublin 2026 to the streets. GBP figures are retained pending EUR conversion review.</p>
     <div class="stat-row">
       <div class="stat">
         <span class="num" id="statDonations">—</span>
@@ -510,7 +510,7 @@
   <!-- EXPENSES -->
   <section class="card">
     <h2>Expenses <span class="accent">Breakdown</span></h2>
-    <p class="section-sub">A line-by-line view of every category that made March for Jesus Belfast 2026 happen — sorted by size.</p>
+    <p class="section-sub">A line-by-line provisional view of every category for March for Jesus Dublin 2026 — sorted by size.</p>
 
     <div class="controls">
       <button class="toggle active" data-mode="amount">By Amount</button>
@@ -551,12 +551,13 @@
   </section>
 
   <footer class="page-foot">
-    <p>Figures reflect actual receipts and payments. Page maintained by the March for Jesus Belfast team. For queries: <a href="mailto:information@marchforjesus.co.uk">information@marchforjesus.co.uk</a></p>
-    <p class="fx-note">Source records are kept in EUR; figures converted to GBP at the ECB reference rate of £1 ≈ €1.155 (May 2026).</p>
+    <p>Figures reflect actual receipts and payments. Page maintained by the March for Jesus Dublin team. For queries: <a href="mailto:information@marchforjesus.ie">information@marchforjesus.ie</a></p>
+    <p class="fx-note">Provisional Dublin page: GBP figures are retained pending EUR conversion review.</p>
   </footer>
 
 </div>
 
+<!-- TODO: convert to EUR for Dublin -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
   // --- DATA ---
@@ -611,12 +612,9 @@
   }
   expenses.forEach((e, i) => e.color = expenseColor(i, expenses.length));
 
-  // --- CURRENCY CONVERSION ---
-  // Source records are in EUR. Convert to GBP at the current ECB reference rate.
-  // 1 EUR = 0.86595 GBP (ECB, May 2026) ⇔ £1 ≈ €1.155
-  const EUR_TO_GBP = 0.86595;
-  donations.forEach(d => { d.value = d.value * EUR_TO_GBP; });
-  expenses.forEach(e => { e.value = e.value * EUR_TO_GBP; });
+  // --- CURRENCY HANDLING ---
+  // Provisional Dublin migration: source figures remain in GBP pending EUR conversion.
+  // Do not change the numeric records until Dublin financials are confirmed.
 
   const totalDonations = donations.reduce((s, d) => s + d.value, 0);
   const totalExpenses  = expenses.reduce((s, e) => s + e.value, 0);

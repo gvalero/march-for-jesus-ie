@@ -12,8 +12,8 @@ compatibility_date = "2024-01-01"
 #      Copy the returned id into database_id below.
 #   2. Set required secrets on the Worker (Stripe live/test, Microsoft Graph creds,
 #      Power Automate webhook, admin token) via `wrangler secret put`.
-#   3. Decide MERCH_CONFIRMATION_SENDER: reuse information@marchforjesus.co.uk
-#      until information@marchforjesus.ie has MX + mailbox provisioned.
+#   3. MERCH_CONFIRMATION_SENDER is information@marchforjesus.ie — an M365 mailbox
+#      in the allnations.ie tenant, so it can send via Microsoft Graph.
 #   4. Uncomment the deploy-merch job in .github/workflows/deploy.yml.
 
 [vars]
@@ -26,8 +26,8 @@ MICROSOFT_GRAPH_SITE_ID = "allnationschurchdub.sharepoint.com,903073eb-ef59-4b83
 # TODO: SharePoint list for .ie orders — currently points at Belfast list. Create a
 # Dublin list before first merch deploy and replace the id here.
 MICROSOFT_GRAPH_LIST_ID = "ad2bcfae-77ca-47fb-b6a0-abb88bb4877c"
-# TODO: provision information@marchforjesus.ie or reuse Belfast sender.
-MERCH_CONFIRMATION_SENDER = "information@marchforjesus.co.uk"
+# information@marchforjesus.ie is an M365 mailbox in the allnations.ie tenant (sends via Graph).
+MERCH_CONFIRMATION_SENDER = "information@marchforjesus.ie"
 # Live mode: real EUR payments are taken via Stripe.
 STRIPE_KEY_MODE = "live"
 

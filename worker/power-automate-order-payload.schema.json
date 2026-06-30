@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://marchforjesus.co.uk/schemas/mfj-merch-order-payload.schema.json",
-  "title": "MFJ Belfast merch paid order payload",
+  "$id": "https://marchforjesus.ie/schemas/mfj-merch-order-payload.schema.json",
+  "title": "MFJ Dublin merch paid order payload",
   "type": "object",
   "required": ["profile", "order", "lines", "totals", "milestonesCrossed"],
   "properties": {
@@ -9,9 +9,9 @@
       "type": "object",
       "required": ["name", "source", "site", "microsoftTenant"],
       "properties": {
-        "name": { "const": "mfj-belfast-merch" },
+        "name": { "const": "mfj-dublin-merch" },
         "source": { "const": "cloudflare-worker" },
-        "site": { "const": "marchforjesus.co.uk" },
+        "site": { "const": "marchforjesus.ie" },
         "microsoftTenant": { "const": "allnations.ie" }
       },
       "additionalProperties": false

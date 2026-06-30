@@ -6,7 +6,7 @@ Disallow: /node_modules/
 Disallow: /pr-plan.html
 Disallow: /financials.html
 
-Sitemap: https://marchforjesus.co.uk/sitemap.xml
+Sitemap: https://marchforjesus.ie/sitemap.xml
 
 # AI Crawlers — explicitly blocked from internal/private pages
 User-agent: GPTBot
