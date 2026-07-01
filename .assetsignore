@@ -1,0 +1,27 @@
+# Files in the repo root that must NOT be uploaded as public Worker assets.
+# Wrangler treats the repo root as the assets directory (see wrangler.jsonc),
+# so exclude tooling, source, and CI-installed dependencies here.
+# Syntax is .gitignore-style.
+
+# CI installs wrangler here; its workerd binary (~121 MiB) exceeds the 25 MiB
+# per-asset limit and must never be served.
+node_modules
+package.json
+package-lock.json
+
+# Version control / editor / CI metadata
+.git
+.github
+.vscode
+.gitignore
+.assetsignore
+
+# GitHub Pages leftovers (irrelevant on Cloudflare Workers)
+.nojekyll
+CNAME
+
+# Worker source, config and dev scripts (served logic, not static assets)
+worker
+wrangler.jsonc
+rearrange.py
+README.md
