@@ -132,7 +132,7 @@
       '<div class="mfj-consent-inner">' +
         '<p class="mfj-consent-text">We use cookies for analytics and to measure our ' +
         'advertising (Google, Meta and TikTok). These load only with your consent. ' +
-        'See how we use them in our privacy notice.</p>' +
+        'See how we use them in our <a href="privacy.html" class="mfj-consent-link">privacy notice</a>.</p>' +
         '<div class="mfj-consent-actions">' +
           '<button type="button" class="mfj-consent-btn mfj-consent-reject">Reject</button>' +
           '<button type="button" class="mfj-consent-btn mfj-consent-accept">Accept</button>' +

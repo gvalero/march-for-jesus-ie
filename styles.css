@@ -2513,3 +2513,6 @@ color:#4D0921;
   .mfj-consent-actions{justify-content:stretch;}
   .mfj-consent-btn{flex:1;}
 }
+
+.mfj-consent-link{color:#e8b923;text-decoration:underline;}
+.mfj-consent-link:hover{color:#fff;}
