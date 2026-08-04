@@ -10,5 +10,8 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
-  ]
+  ],
+  "vars": {
+    "TIKTOK_PIXEL_ID": "D9L843RC77U57S87KRC0"
+  }
 }
