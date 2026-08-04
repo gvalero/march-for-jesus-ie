@@ -2461,3 +2461,55 @@ color:#4D0921;
   opacity: 1;
   pointer-events: auto;
 }
+
+/* ---- Cookie consent banner ---------------------------------------------- */
+.mfj-consent{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:9999;
+  display:none;
+  background:#111;
+  color:#fff;
+  box-shadow:0 -2px 18px rgba(0,0,0,.35);
+}
+.mfj-consent.is-visible{display:block;}
+.mfj-consent-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:18px 22px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:space-between;
+}
+.mfj-consent-text{
+  margin:0;
+  font-size:.9rem;
+  line-height:1.5;
+  flex:1 1 320px;
+}
+.mfj-consent-actions{
+  display:flex;
+  gap:12px;
+  flex:0 0 auto;
+}
+.mfj-consent-btn{
+  cursor:pointer;
+  border:0;
+  border-radius:6px;
+  padding:11px 26px;
+  font-size:.9rem;
+  font-weight:600;
+  min-width:120px;
+}
+.mfj-consent-accept{background:#e8b923;color:#111;}
+.mfj-consent-reject{background:transparent;color:#fff;border:1px solid #fff;}
+.mfj-consent-btn:hover{opacity:.9;}
+@media (max-width:600px){
+  .mfj-consent-inner{flex-direction:column;align-items:stretch;}
+  .mfj-consent-actions{justify-content:stretch;}
+  .mfj-consent-btn{flex:1;}
+}

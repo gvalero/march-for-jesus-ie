@@ -10,6 +10,46 @@ const ALLOWED_ORIGINS = [
 
 const MAILERLITE_GROUP_ID = '181638643685786861';
 
+const TIKTOK_EVENTS_API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
+
+// Send a server-side TikTok "SubmitForm" event that mirrors the browser Pixel
+// event. The shared event_id lets TikTok deduplicate the two copies. This is
+// best-effort: any failure here must never affect the signup response.
+async function sendTikTokSubmitForm(env, request, data) {
+  const token = env.TIKTOK_EVENTS_API_ACCESS_TOKEN;
+  const pixelId = env.TIKTOK_PIXEL_ID;
+  if (!token || !pixelId || !data.eventId) return;
+
+  const payload = {
+    event_source: 'web',
+    event_source_id: pixelId,
+    data: [{
+      event: 'SubmitForm',
+      event_time: Math.floor(Date.now() / 1000),
+      event_id: data.eventId,
+      user: {
+        ttclid: data.ttclid || undefined,
+        ttp: data.ttp || undefined,
+        ip: request.headers.get('CF-Connecting-IP') || undefined,
+        user_agent: request.headers.get('User-Agent') || undefined
+      },
+      page: { url: data.pageUrl || 'https://marchforjesus.ie/' }
+    }]
+  };
+
+  try {
+    const res = await fetch(TIKTOK_EVENTS_API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Access-Token': token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    // Log status only — never log raw form fields or the access token.
+    console.log('TikTok Events API status:', res.status);
+  } catch (e) {
+    console.error('TikTok Events API request failed:', e && e.message);
+  }
+}
+
 function corsHeaders(origin) {
   return {
     'Access-Control-Allow-Origin': ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
@@ -20,7 +60,7 @@ function corsHeaders(origin) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const origin = request.headers.get('Origin') || '';
 
     // Handle CORS preflight
@@ -82,6 +122,17 @@ export default {
           status: 500,
           headers: { ...corsHeaders(origin), 'Content-Type': 'application/json' }
         });
+      }
+
+      // Server-side TikTok SubmitForm — sign-up form only, with marketing
+      // tracking consent. Runs after the response via waitUntil so a slow or
+      // failing TikTok call never delays or breaks the signup.
+      if (form_type === 'website_signup' && data.marketing_tracking_consent === true) {
+        if (ctx && typeof ctx.waitUntil === 'function') {
+          ctx.waitUntil(sendTikTokSubmitForm(env, request, data));
+        } else {
+          sendTikTokSubmitForm(env, request, data);
+        }
       }
 
       return new Response(JSON.stringify({ success: true, message: 'Successfully subscribed!' }), {

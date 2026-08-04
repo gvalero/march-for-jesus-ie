@@ -260,6 +260,21 @@ if (galleryToggle && galleryGrid) {
     });
 }
 
+// --- Marketing tracking helpers (consent-gated via consent.js / MFJConsent) ---
+function mfjEventId() {
+    if (window.crypto && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+    }
+    return 'e-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+}
+function mfjGetCookie(name) {
+    var m = document.cookie.match('(?:^|; )' + name.replace(/([.*+?^${}()|[\]\\])/g, '\\$1') + '=([^;]*)');
+    return m ? decodeURIComponent(m[1]) : '';
+}
+function mfjMarketingConsent() {
+    return !!(window.MFJConsent && window.MFJConsent.hasMarketingConsent());
+}
+
 // --- Email Signup Form (MailerLite via Cloudflare Worker) ---
 var emailForm = document.getElementById('emailSignupForm');
 if (emailForm) {
@@ -282,6 +297,15 @@ if (emailForm) {
             form_type: 'website_signup'
         };
 
+        // One shared ID so the browser TikTok event and the server-side Events
+        // API event (sent by the Worker) can be deduplicated by TikTok.
+        var eventId = mfjEventId();
+        formData.eventId = eventId;
+        formData.ttclid = new URLSearchParams(window.location.search).get('ttclid') || '';
+        formData.ttp = mfjGetCookie('_ttp');
+        formData.pageUrl = window.location.href;
+        formData.marketing_tracking_consent = mfjMarketingConsent();
+
         fetch('https://mfj-mailerlite-proxy.valerogian.workers.dev', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -294,9 +318,22 @@ if (emailForm) {
                         form_name: 'Email Signup',
                         form_destination: 'mailerlite'
                     });
+                    // GA4 recommended lead event — Updates (sign-up) form only.
                     gtag('event', 'generate_lead', {
-                        method: 'email_signup'
+                        form_id: 'updates_form',
+                        form_name: 'March for Jesus Ireland - Sign Up for Updates',
+                        form_location: 'homepage',
+                        lead_type: 'event_updates'
                     });
+                }
+                // Meta + TikTok conversions — fire only with marketing consent.
+                if (mfjMarketingConsent()) {
+                    if (typeof window.fbq === 'function') {
+                        window.fbq('track', 'Lead');
+                    }
+                    if (window.ttq && typeof window.ttq.track === 'function') {
+                        window.ttq.track('SubmitForm', {}, { event_id: eventId });
+                    }
                 }
                 btn.textContent = 'Thank you!';
                 emailForm.reset();
@@ -344,8 +381,11 @@ if (contactForm) {
                         form_name: 'Contact Form',
                         form_destination: 'mailerlite'
                     });
-                    gtag('event', 'generate_lead', {
-                        method: 'contact_form'
+                    // Contact form is NOT a lead — distinct GA4 signal only.
+                    gtag('event', 'contact_request', {
+                        form_id: 'contact_form',
+                        form_name: 'Get in Touch',
+                        form_location: 'homepage'
                     });
                 }
                 btn.textContent = 'Sent!';
