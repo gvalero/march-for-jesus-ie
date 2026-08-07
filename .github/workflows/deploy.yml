@@ -50,11 +50,20 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Pin wrangler 4.x — assets-only Workers (no `main` field) require
+          # Pin wrangler 4.x — Workers with a static-assets binding require
           # wrangler >= 3.95. The action's default 3.90.0 fails with
           # "Missing entry-point". Track latest 4.x so we get bug fixes.
           wranglerVersion: '4'
           # No `command:` — defaults to `deploy`, using root wrangler.jsonc.
+          # Upload server-side secrets to the Worker on every deploy. Values
+          # come from the encrypted repo secrets below; they are never written
+          # to the repo, the browser, or the Worker config file.
+          secrets: |
+            MAILERLITE_API_KEY
+            TIKTOK_EVENTS_API_ACCESS_TOKEN
+        env:
+          MAILERLITE_API_KEY: ${{ secrets.MAILERLITE_API_KEY }}
+          TIKTOK_EVENTS_API_ACCESS_TOKEN: ${{ secrets.TIKTOK_EVENTS_API_ACCESS_TOKEN }}
 
   # ----------------------------------------------------------------------------
   # Merch Worker deploy — DISABLED until prerequisites are met:
