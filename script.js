@@ -306,7 +306,7 @@ if (emailForm) {
         formData.pageUrl = window.location.href;
         formData.marketing_tracking_consent = mfjMarketingConsent();
 
-        fetch('https://mfj-mailerlite-proxy.valerogian.workers.dev', {
+        fetch('/api/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
@@ -369,7 +369,7 @@ if (contactForm) {
             form_type: 'contact_form'
         };
 
-        fetch('https://mfj-mailerlite-proxy.valerogian.workers.dev', {
+        fetch('/api/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
