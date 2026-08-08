@@ -85,6 +85,9 @@
         e = document.getElementsByTagName('script')[0]; e.parentNode.insertBefore(n, e);
       };
       ttq.load(TIKTOK_PIXEL_ID);
+      // Explicitly signal the visitor's granted choice to TikTok before the
+      // first event. This is required by the current SDK in consent regions.
+      ttq.grantConsent();
       ttq.page();
     }(window, document, 'ttq');
     tiktokLoaded = true;
