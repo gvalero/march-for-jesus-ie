@@ -28,6 +28,9 @@ const MAILERLITE_GROUP_ID = '181638643685786861';
 
 const TIKTOK_EVENTS_API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';
 
+const CHURCH_REGISTRATION_URL =
+  'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=f6y-zCtfL06W-3G7pTXM82CVYKlavfFOlvnuDnu6lV1UMjlCWkJIRkdJUTM5MExVVDI5RldZQ0w2Vi4u';
+
 // Send a server-side TikTok "SubmitForm" event that mirrors the browser Pixel
 // event. The shared event_id lets TikTok deduplicate the two copies. This is
 // best-effort: any failure here must never affect the signup response.
@@ -170,6 +173,10 @@ export default {
     // Form backend — everything else falls through to the static site assets.
     if (url.pathname === '/api/subscribe') {
       return handleSubscribe(request, env, ctx);
+    }
+
+    if (url.pathname === '/churchregistration') {
+      return Response.redirect(CHURCH_REGISTRATION_URL, 302);
     }
 
     return env.ASSETS.fetch(request);

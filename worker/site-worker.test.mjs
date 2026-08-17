@@ -1,0 +1,59 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import test from 'node:test';
+
+import siteWorker from './site-worker.js';
+
+const CHURCH_REGISTRATION_URL =
+  'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=f6y-zCtfL06W-3G7pTXM82CVYKlavfFOlvnuDnu6lV1UMjlCWkJIRkdJUTM5MExVVDI5RldZQ0w2Vi4u';
+
+test('redirects the church registration short URL to Microsoft Forms', async () => {
+  const env = {
+    ASSETS: {
+      fetch() {
+        throw new Error('Static assets should not handle the redirect');
+      }
+    }
+  };
+
+  const response = await siteWorker.fetch(
+    new Request('https://marchforjesus.ie/churchregistration'),
+    env,
+    {}
+  );
+
+  assert.equal(response.status, 302);
+  assert.equal(response.headers.get('location'), CHURCH_REGISTRATION_URL);
+});
+
+test('continues to serve other paths from the static assets binding', async () => {
+  const assetResponse = new Response('home page');
+  const env = {
+    ASSETS: {
+      fetch(request) {
+        assert.equal(new URL(request.url).pathname, '/');
+        return assetResponse;
+      }
+    }
+  };
+
+  const response = await siteWorker.fetch(
+    new Request('https://marchforjesus.ie/'),
+    env,
+    {}
+  );
+
+  assert.equal(response, assetResponse);
+});
+
+test('shows three involvement options with church registration replacing attendee signup', async () => {
+  const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+  const signupSection = html.match(/<section id="signup"[\s\S]*?<\/section>/)?.[0];
+
+  assert.ok(signupSection);
+  assert.equal((signupSection.match(/class="signup-step"/g) || []).length, 3);
+  assert.match(signupSection, /Three ways to be part of March for Jesus Dublin 2026/);
+  assert.match(signupSection, /href="\/churchregistration"/);
+  assert.match(signupSection, /Churches – Join Us!/);
+  assert.doesNotMatch(signupSection, /Sign Up to Attend/);
+});
