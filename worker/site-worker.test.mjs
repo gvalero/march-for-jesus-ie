@@ -49,16 +49,24 @@ test('continues to serve other paths from the static assets binding', async () =
 test('shows three involvement options with church registration replacing attendee signup', async () => {
   const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
   const signupSection = html.match(/<section id="signup"[\s\S]*?<\/section>/)?.[0];
+  const signupCards = signupSection?.match(/<a [^>]*class="signup-step">[\s\S]*?<\/a>/g) || [];
+  const stewardCard = signupCards.find((card) => card.includes('<h3>Become a Steward</h3>'));
+  const communityCard = signupCards.find((card) => card.includes('<h3>Join the WhatsApp Community</h3>'));
 
   assert.match(html, /<li class="dropdown has-submenu">\s*<a href="#signup">Get Involved<\/a>/);
   assert.match(html, /<a href="#signup" class="hero-cta">Get Involved<\/a>/);
   assert.doesNotMatch(html, /<a href="#signup" class="hero-cta">Sign Up Now<\/a>/);
   assert.doesNotMatch(html, /G6m8cG5FMAm8tozPNGQFvW/);
   assert.ok(signupSection);
-  assert.equal((signupSection.match(/class="signup-step"/g) || []).length, 3);
+  assert.equal(signupCards.length, 3);
   assert.match(signupSection, /Three ways to be part of March for Jesus Dublin 2026/);
-  assert.match(signupSection, /href="https:\/\/chat\.whatsapp\.com\/JnwgDBFyLvkDBUI0PkaTsF"/);
-  assert.match(signupSection, /href="https:\/\/chat\.whatsapp\.com\/DcYqf41xuhyDyIp6khczlG"/);
+  assert.ok(stewardCard);
+  assert.match(
+    stewardCard,
+    /href="https:\/\/forms\.office\.com\/Pages\/ResponsePage\.aspx\?id=f6y-zCtfL06W-3G7pTXM82CVYKlavfFOlvnuDnu6lV1UNkU1UzAwNUxKTlIxUUpRMTUzQURNMUFZQy4u"/
+  );
+  assert.ok(communityCard);
+  assert.match(communityCard, /href="https:\/\/chat\.whatsapp\.com\/DcYqf41xuhyDyIp6khczlG"/);
   assert.match(signupSection, /href="\/churchregistration"/);
   assert.match(signupSection, /Churches – Join Us!/);
   assert.doesNotMatch(signupSection, /Sign Up to Attend/);
