@@ -50,9 +50,10 @@ test('shows three involvement options with church registration replacing attende
   const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
   const signupSection = html.match(/<section id="signup"[\s\S]*?<\/section>/)?.[0];
 
-  assert.match(html, /<a href="#signup">Get Involved<\/a>/);
+  assert.match(html, /<li class="dropdown has-submenu">\s*<a href="#signup">Get Involved<\/a>/);
   assert.match(html, /<a href="#signup" class="hero-cta">Get Involved<\/a>/);
   assert.doesNotMatch(html, /<a href="#signup" class="hero-cta">Sign Up Now<\/a>/);
+  assert.doesNotMatch(html, /G6m8cG5FMAm8tozPNGQFvW/);
   assert.ok(signupSection);
   assert.equal((signupSection.match(/class="signup-step"/g) || []).length, 3);
   assert.match(signupSection, /Three ways to be part of March for Jesus Dublin 2026/);
