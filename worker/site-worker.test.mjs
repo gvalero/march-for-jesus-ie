@@ -63,3 +63,21 @@ test('shows three involvement options with church registration replacing attende
   assert.match(signupSection, /Churches – Join Us!/);
   assert.doesNotMatch(signupSection, /Sign Up to Attend/);
 });
+
+test('shows a prominent confirmation state after updates signup succeeds', async () => {
+  const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+  const script = await readFile(new URL('../script.js', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
+
+  assert.match(
+    html,
+    /id="emailSignupSuccess" class="updates-success" role="status" aria-live="polite" tabindex="-1" hidden/
+  );
+  assert.match(html, /<h3>Thank you for signing up!<\/h3>/);
+  assert.match(script, /emailForm\.hidden = true;/);
+  assert.match(script, /emailSignupSuccess\.hidden = false;/);
+  assert.match(script, /emailSignupSuccess\.focus\(\);/);
+  assert.match(styles, /\.contact-signup-section \.updates-success/);
+  assert.match(styles, /\.contact-signup-section \.updates-form\[hidden\]/);
+  assert.match(styles, /\.updates-success\[hidden\]/);
+});

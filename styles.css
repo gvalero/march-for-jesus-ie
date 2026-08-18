@@ -1408,6 +1408,10 @@ color:#4D0921;
   margin-top: 10px;
 }
 
+.contact-signup-section .updates-form[hidden] {
+  display: none;
+}
+
 .contact-signup-section .updates-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1597,6 +1601,53 @@ color:#4D0921;
   font-size: 0.95rem;
   color: #4D0921;
   opacity: 0.9;
+}
+
+.contact-signup-section .updates-success {
+  min-height: 320px;
+  padding: 48px 32px;
+  border: 3px solid #6A0028;
+  background: #f8eee0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  color: #2f2a2a;
+  box-shadow: 0 12px 30px rgba(77, 9, 33, 0.16);
+}
+
+.updates-success[hidden] {
+  display: none;
+}
+
+.contact-signup-section .updates-success-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #6A0028;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.contact-signup-section .updates-success h3 {
+  margin: 0;
+  color: #4D0921;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.contact-signup-section .updates-success p {
+  max-width: 440px;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
 /* Press Releases Section */
