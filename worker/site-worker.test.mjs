@@ -57,7 +57,10 @@ test('shows three involvement options with church registration replacing attende
   assert.ok(signupSection);
   assert.equal((signupSection.match(/class="signup-step"/g) || []).length, 3);
   assert.match(signupSection, /Three ways to be part of March for Jesus Dublin 2026/);
-  assert.match(signupSection, /href="https:\/\/chat\.whatsapp\.com\/JnwgDBFyLvkDBUI0PkaTsF"/);
+  assert.match(
+    signupSection,
+    /href="https:\/\/forms\.office\.com\/Pages\/ResponsePage\.aspx\?id=f6y-zCtfL06W-3G7pTXM82CVYKlavfFOlvnuDnu6lV1UNkU1UzAwNUxKTlIxUUpRMTUzQURNMUFZQy4u"/
+  );
   assert.match(signupSection, /href="https:\/\/chat\.whatsapp\.com\/DcYqf41xuhyDyIp6khczlG"/);
   assert.match(signupSection, /href="\/churchregistration"/);
   assert.match(signupSection, /Churches – Join Us!/);
