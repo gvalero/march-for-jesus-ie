@@ -281,7 +281,10 @@ if (emailForm) {
     emailForm.addEventListener('submit', function(e) {
         e.preventDefault();
         var btn = emailForm.querySelector('button[type="submit"]');
+        var emailSignupSuccess = document.getElementById('emailSignupSuccess');
+        var emailSignupNote = document.getElementById('emailSignupNote');
         var originalText = btn.textContent;
+        var succeeded = false;
         btn.textContent = 'Sending...';
         btn.disabled = true;
 
@@ -335,18 +338,24 @@ if (emailForm) {
                         window.ttq.track('SubmitForm', {}, { event_id: eventId });
                     }
                 }
-                btn.textContent = 'Thank you!';
                 emailForm.reset();
+                emailForm.hidden = true;
+                emailSignupNote.hidden = true;
+                emailSignupSuccess.hidden = false;
+                emailSignupSuccess.focus();
+                succeeded = true;
             } else {
                 btn.textContent = 'Error — try again';
             }
         }).catch(function() {
             btn.textContent = 'Error — try again';
         }).finally(function() {
-            setTimeout(function() {
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }, 3000);
+            if (!succeeded) {
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }, 3000);
+            }
         });
     });
 }
