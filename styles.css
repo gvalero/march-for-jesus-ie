@@ -515,9 +515,10 @@ color:#4D0921;
 
 .watch-stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 22px;
   margin-bottom: 28px;
+  max-width: 260px;
 }
 
 .stat {
@@ -587,7 +588,8 @@ color:#4D0921;
 
 @media (max-width: 600px) {
   .watch-stats {
-    grid-template-columns: 1fr;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .watch-text h2 {
@@ -1208,6 +1210,41 @@ color:#4D0921;
   color: #6b5a54;
   font-family: 'Space Mono', monospace;
   font-size: 0.86rem;
+}
+
+.route-schedule-layout {
+  max-width: 1180px;
+  margin: 44px auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
+  gap: 38px;
+  align-items: start;
+}
+
+.route-schedule .route-map-card {
+  max-width: none;
+  margin: 0;
+}
+
+.schedule-panel {
+  background: var(--burgundy);
+  color: white;
+  padding: 30px 28px;
+  border-radius: 18px;
+  box-shadow: 0 20px 38px rgba(77, 9, 33, 0.2);
+  text-align: left;
+}
+
+.schedule-panel .schedule-grid {
+  gap: 16px;
+  margin-top: 0;
+}
+
+@media (max-width: 1000px) {
+  .route-schedule-layout {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+  }
 }
 
 /* Support Section */

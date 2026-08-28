@@ -1,4 +1,4 @@
-const eventDate = new Date(2026, 8, 26, 10, 0, 0).getTime();
+const eventDate = new Date(2026, 8, 26, 13, 30, 0).getTime();
 
 function updateCountdown() {
 	var daysEl = document.getElementById("days");
