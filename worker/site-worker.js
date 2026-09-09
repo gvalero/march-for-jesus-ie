@@ -179,6 +179,12 @@ export default {
       return Response.redirect(CHURCH_REGISTRATION_URL, 302);
     }
 
+    if (url.pathname === '/evangelise' || url.pathname === '/evangelise/') {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = '/evangelise.html';
+      return env.ASSETS.fetch(new Request(assetUrl, request));
+    }
+
     return env.ASSETS.fetch(request);
   }
 };

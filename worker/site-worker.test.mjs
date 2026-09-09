@@ -6,6 +6,8 @@ import siteWorker from './site-worker.js';
 
 const CHURCH_REGISTRATION_URL =
   'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=f6y-zCtfL06W-3G7pTXM82CVYKlavfFOlvnuDnu6lV1UMjlCWkJIRkdJUTM5MExVVDI5RldZQ0w2Vi4u';
+const EVANGELISE_FORM_URL =
+  'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=f6y-zCtfL06W-3G7pTXM82CVYKlavfFOlvnuDnu6lV1URFRXTk1INEJVRlJTVjM4OVRWRUVJNzkyTS4u';
 
 test('redirects the church registration short URL to Microsoft Forms', async () => {
   const env = {
@@ -46,7 +48,27 @@ test('continues to serve other paths from the static assets binding', async () =
   assert.equal(response, assetResponse);
 });
 
-test('shows three involvement options with church registration replacing attendee signup', async () => {
+test('serves the evangelise landing page from the clean short URL', async () => {
+  const assetResponse = new Response('evangelise page');
+  const env = {
+    ASSETS: {
+      fetch(request) {
+        assert.equal(new URL(request.url).pathname, '/evangelise.html');
+        return assetResponse;
+      }
+    }
+  };
+
+  const response = await siteWorker.fetch(
+    new Request('https://marchforjesus.ie/evangelise'),
+    env,
+    {}
+  );
+
+  assert.equal(response, assetResponse);
+});
+
+test('shows evangelism as the third involvement option', async () => {
   const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
   const signupSection = html.match(/<section id="signup"[\s\S]*?<\/section>/)?.[0];
   const signupCards = signupSection?.match(/<a [^>]*class="signup-step">[\s\S]*?<\/a>/g) || [];
@@ -67,9 +89,20 @@ test('shows three involvement options with church registration replacing attende
   );
   assert.ok(communityCard);
   assert.match(communityCard, /href="https:\/\/chat\.whatsapp\.com\/DcYqf41xuhyDyIp6khczlG"/);
-  assert.match(signupSection, /href="\/churchregistration"/);
-  assert.match(signupSection, /Churches – Join Us!/);
+  assert.match(signupSection, /href="\/evangelise"/);
+  assert.match(signupSection, /Evangelise on the Day/);
+  assert.match(signupSection, /grace-filled message/);
+  assert.doesNotMatch(signupSection, /Churches – Join Us!/);
   assert.doesNotMatch(signupSection, /Sign Up to Attend/);
+});
+
+test('embeds the evangelism form with a direct fallback link', async () => {
+  const html = await readFile(new URL('../evangelise.html', import.meta.url), 'utf8');
+
+  assert.match(html, /<link rel="canonical" href="https:\/\/marchforjesus\.ie\/evangelise">/);
+  assert.match(html, /<iframe[\s\S]*title="Register to evangelise at March for Jesus Dublin"/);
+  assert.match(html, new RegExp(EVANGELISE_FORM_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(html, /open the registration form/);
 });
 
 test('shows a prominent confirmation state after updates signup succeeds', async () => {
