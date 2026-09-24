@@ -1,0 +1,104 @@
+name: Manage DNS Record
+
+# One-off / repeatable helper to create or update a single DNS record on the
+# marchforjesus.ie Cloudflare zone, without ever exposing the
+# CLOUDFLARE_API_TOKEN outside of GitHub Actions' encrypted secret store.
+#
+# Required repository secrets (already present — see deploy.yml):
+#   CLOUDFLARE_API_TOKEN   — token with Zone:DNS:Edit on the MFJ Cloudflare account
+#   CLOUDFLARE_ACCOUNT_ID  — f5af5b92e5434fcbf9234cf922778f07
+#
+# Usage: gh workflow run manage-dns.yml -f name=translate -f target=liveword-app.azurewebsites.net -f proxied=false
+
+on:
+  workflow_dispatch:
+    inputs:
+      zone:
+        description: 'Cloudflare zone (apex domain)'
+        required: false
+        default: 'marchforjesus.ie'
+      name:
+        description: 'Record name (subdomain only, e.g. "translate")'
+        required: true
+      type:
+        description: 'DNS record type'
+        required: false
+        default: 'CNAME'
+      target:
+        description: 'Record content/target (e.g. liveword-app.azurewebsites.net)'
+        required: true
+      proxied:
+        description: 'Whether Cloudflare should proxy this record (must be false for Azure App Service custom domain verification + WebSockets)'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: read
+
+jobs:
+  upsert-record:
+    name: Create/update DNS record
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve zone ID
+        id: zone
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ZONE_NAME: ${{ github.event.inputs.zone }}
+        run: |
+          set -euo pipefail
+          resp=$(curl -sS -X GET "https://api.cloudflare.com/client/v4/zones?name=${ZONE_NAME}" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json")
+          echo "$resp" | jq -e '.success' > /dev/null || { echo "$resp"; exit 1; }
+          zone_id=$(echo "$resp" | jq -r '.result[0].id')
+          if [ -z "$zone_id" ] || [ "$zone_id" = "null" ]; then
+            echo "Zone ${ZONE_NAME} not found or token lacks Zone:Read on this account"
+            echo "$resp"
+            exit 1
+          fi
+          echo "zone_id=$zone_id" >> "$GITHUB_OUTPUT"
+
+      - name: Upsert DNS record
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ZONE_ID: ${{ steps.zone.outputs.zone_id }}
+          RECORD_NAME: ${{ github.event.inputs.name }}
+          RECORD_TYPE: ${{ github.event.inputs.type }}
+          RECORD_TARGET: ${{ github.event.inputs.target }}
+          RECORD_PROXIED: ${{ github.event.inputs.proxied }}
+          ZONE_NAME: ${{ github.event.inputs.zone }}
+        run: |
+          set -euo pipefail
+          fqdn="${RECORD_NAME}.${ZONE_NAME}"
+
+          existing=$(curl -sS -X GET "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?type=${RECORD_TYPE}&name=${fqdn}" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json")
+          echo "$existing" | jq -e '.success' > /dev/null || { echo "$existing"; exit 1; }
+          record_id=$(echo "$existing" | jq -r '.result[0].id // empty')
+
+          payload=$(jq -n \
+            --arg type "$RECORD_TYPE" \
+            --arg name "$fqdn" \
+            --arg content "$RECORD_TARGET" \
+            --argjson proxied "$RECORD_PROXIED" \
+            --argjson ttl 1 \
+            '{type: $type, name: $name, content: $content, proxied: $proxied, ttl: $ttl}')
+
+          if [ -n "$record_id" ]; then
+            echo "Updating existing record $record_id for $fqdn -> $RECORD_TARGET"
+            resp=$(curl -sS -X PUT "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${record_id}" \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              --data "$payload")
+          else
+            echo "Creating new record for $fqdn -> $RECORD_TARGET"
+            resp=$(curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              --data "$payload")
+          fi
+
+          echo "$resp" | jq -e '.success' > /dev/null || { echo "$resp"; exit 1; }
+          echo "$resp" | jq '.result'
