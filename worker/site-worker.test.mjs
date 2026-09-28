@@ -33,7 +33,7 @@ test('serves the homepage at the clean support and give URLs', async () => {
   const env = {
     ASSETS: {
       fetch(request) {
-        assert.equal(new URL(request.url).pathname, '/index.html');
+        assert.equal(new URL(request.url).pathname, '/');
         return assetResponse;
       }
     }

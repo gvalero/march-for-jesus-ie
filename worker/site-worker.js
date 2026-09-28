@@ -189,7 +189,7 @@ export default {
 
     if (SUPPORT_PATHS.has(url.pathname)) {
       const assetUrl = new URL(request.url);
-      assetUrl.pathname = '/index.html';
+      assetUrl.pathname = '/';
       return env.ASSETS.fetch(new Request(assetUrl, request));
     }
 
