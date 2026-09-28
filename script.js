@@ -42,13 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	});
 
-	if (window.location.pathname === "/support" || window.location.pathname === "/give") {
-		const supportSection = document.getElementById("support");
-		if (supportSection) {
-			supportSection.scrollIntoView();
-		}
-	}
-
 	const menuToggle = document.querySelector(".menu-toggle");
 	const menu = document.querySelector(".menu");
 	const nav = document.querySelector(".nav");

@@ -28,12 +28,12 @@ test('redirects the church registration short URL to Microsoft Forms', async () 
   assert.equal(response.headers.get('location'), CHURCH_REGISTRATION_URL);
 });
 
-test('serves the homepage at the clean support and give URLs', async () => {
-  const assetResponse = new Response('support section');
+test('serves the dedicated support page at the clean support and give URLs', async () => {
+  const assetResponse = new Response('support page');
   const env = {
     ASSETS: {
       fetch(request) {
-        assert.equal(new URL(request.url).pathname, '/');
+        assert.equal(new URL(request.url).pathname, '/support.html');
         return assetResponse;
       }
     }
@@ -48,6 +48,15 @@ test('serves the homepage at the clean support and give URLs', async () => {
 
     assert.equal(response, assetResponse);
   }
+});
+
+test('the dedicated support page contains both donation methods', async () => {
+  const html = await readFile(new URL('../support.html', import.meta.url), 'utf8');
+
+  assert.match(html, /<link rel="canonical" href="https:\/\/marchforjesus\.ie\/support">/);
+  assert.match(html, /Christian Voice Ireland/);
+  assert.match(html, /IE71 AIBK 9312 3365 2800 88/);
+  assert.match(html, /hosted_button_id=U8SF4BGD9A4GU/);
 });
 
 test('redirects trailing-slash support URLs to their canonical clean paths', async () => {
