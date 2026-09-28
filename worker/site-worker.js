@@ -31,6 +31,8 @@ const TIKTOK_EVENTS_API_ENDPOINT = 'https://business-api.tiktok.com/open_api/v1.
 const CHURCH_REGISTRATION_URL =
   'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=f6y-zCtfL06W-3G7pTXM82CVYKlavfFOlvnuDnu6lV1UMjlCWkJIRkdJUTM5MExVVDI5RldZQ0w2Vi4u';
 
+const SUPPORT_PATHS = new Set(['/support', '/give']);
+
 // Send a server-side TikTok "SubmitForm" event that mirrors the browser Pixel
 // event. The shared event_id lets TikTok deduplicate the two copies. This is
 // best-effort: any failure here must never affect the signup response.
@@ -177,6 +179,18 @@ export default {
 
     if (url.pathname === '/churchregistration') {
       return Response.redirect(CHURCH_REGISTRATION_URL, 302);
+    }
+
+    if (url.pathname === '/support/' || url.pathname === '/give/') {
+      const canonicalUrl = new URL(request.url);
+      canonicalUrl.pathname = url.pathname.slice(0, -1);
+      return Response.redirect(canonicalUrl, 301);
+    }
+
+    if (SUPPORT_PATHS.has(url.pathname)) {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = '/index.html';
+      return env.ASSETS.fetch(new Request(assetUrl, request));
     }
 
     if (url.pathname === '/evangelise' || url.pathname === '/evangelise/') {

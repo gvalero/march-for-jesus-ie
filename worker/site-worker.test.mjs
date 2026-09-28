@@ -28,6 +28,52 @@ test('redirects the church registration short URL to Microsoft Forms', async () 
   assert.equal(response.headers.get('location'), CHURCH_REGISTRATION_URL);
 });
 
+test('serves the homepage at the clean support and give URLs', async () => {
+  const assetResponse = new Response('support section');
+  const env = {
+    ASSETS: {
+      fetch(request) {
+        assert.equal(new URL(request.url).pathname, '/index.html');
+        return assetResponse;
+      }
+    }
+  };
+
+  for (const path of ['/support', '/give']) {
+    const response = await siteWorker.fetch(
+      new Request(`https://marchforjesus.ie${path}`),
+      env,
+      {}
+    );
+
+    assert.equal(response, assetResponse);
+  }
+});
+
+test('redirects trailing-slash support URLs to their canonical clean paths', async () => {
+  const env = {
+    ASSETS: {
+      fetch() {
+        throw new Error('Static assets should not handle canonical redirects');
+      }
+    }
+  };
+
+  for (const path of ['/support/', '/give/']) {
+    const response = await siteWorker.fetch(
+      new Request(`https://marchforjesus.ie${path}`),
+      env,
+      {}
+    );
+
+    assert.equal(response.status, 301);
+    assert.equal(
+      response.headers.get('location'),
+      `https://marchforjesus.ie${path.slice(0, -1)}`
+    );
+  }
+});
+
 test('continues to serve other paths from the static assets binding', async () => {
   const assetResponse = new Response('home page');
   const env = {
